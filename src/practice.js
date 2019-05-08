@@ -7,63 +7,65 @@ const knexInstance = knex({
   connection: process.env.DB_URL
 });
 
-function searchByProduceName(searchTerm) {
-  knexInstance
-    .select('product_id', 'name', 'price', 'category')
-    .from('amazong_products')
-    .where('name', 'ILIKE', `%${searchTerm}%`)
-    .then(result => {
-      console.log(result)
-    })
-}
+console.log('connected!')
 
-searchByProduceName('scRewdriver')
+// function searchByProduceName(searchTerm) {
+//   knexInstance
+//     .select('product_id', 'name', 'price', 'category')
+//     .from('amazong_products')
+//     .where('name', 'ILIKE', `%${searchTerm}%`)
+//     .then(result => {
+//       console.log(result)
+//     })
+// }
 
-function paginateProducts(page) {
-  const productsPerPage = 10
-  const offset = productsPerPage * (page - 1)
-  knexInstance
-    .select('product_id', 'name', 'price', 'category')
-    .from('amazong_products')
-    .limit(productsPerPage)
-    .offset(offset)
-    .then(result => {
-      console.log(result)
-    })
-}
+// searchByProduceName('scRewdriver')
 
-paginateProducts(2)
+// function paginateProducts(page) {
+//   const productsPerPage = 10
+//   const offset = productsPerPage * (page - 1)
+//   knexInstance
+//     .select('product_id', 'name', 'price', 'category')
+//     .from('amazong_products')
+//     .limit(productsPerPage)
+//     .offset(offset)
+//     .then(result => {
+//       console.log(result)
+//     })
+// }
 
-function getProductsWithImages() {
-  knexInstance
-    .select('product_id', 'name', 'price', 'category', 'image')
-    .from('amazong_products')
-    .whereNotNull('image')
-    .then(result => {
-      console.log(result)
-    })
-}
+// paginateProducts(2)
 
-getProductsWithImages()
+// function getProductsWithImages() {
+//   knexInstance
+//     .select('product_id', 'name', 'price', 'category', 'image')
+//     .from('amazong_products')
+//     .whereNotNull('image')
+//     .then(result => {
+//       console.log(result)
+//     })
+// }
 
-function mostPopularVideosForDays(days) {
-  knexInstance
-    .select('video_name', 'region')
-    .count('date_viewed AS views')
-    .where(
-      'date_viewed',
-      '>',
-      knexInstance.raw(`now() - '?? days'::INTERVAL`, days)
-    )
-    .from('whopipe_video_views')
-    .groupBy('video_name', 'region')
-    .orderBy([
-      { column: 'region', order: 'ASC' },
-      { column: 'views', order: 'DESC' },
-    ])
-    .then(result => {
-      console.log(result)
-    })
-}
+// getProductsWithImages()
 
-mostPopularVideosForDays(30)
+// function mostPopularVideosForDays(days) {
+//   knexInstance
+//     .select('video_name', 'region')
+//     .count('date_viewed AS views')
+//     .where(
+//       'date_viewed',
+//       '>',
+//       knexInstance.raw(`now() - '?? days'::INTERVAL`, days)
+//     )
+//     .from('whopipe_video_views')
+//     .groupBy('video_name', 'region')
+//     .orderBy([
+//       { column: 'region', order: 'ASC' },
+//       { column: 'views', order: 'DESC' },
+//     ])
+//     .then(result => {
+//       console.log(result)
+//     })
+// }
+
+// mostPopularVideosForDays(30)
