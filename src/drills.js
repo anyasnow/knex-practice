@@ -51,6 +51,7 @@ function getDaysAgo(days) {
 function getTotalCost() {
     knexInstance
         .select('category')
+        .count('price as total')
         .sum('price')
         .from('shopping_list')
         .groupBy('category')
